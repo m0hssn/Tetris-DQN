@@ -19,6 +19,8 @@ class DeepQNetwork(nn.Module):
 
         self.embedding = nn.Linear(6, 1)
 
+        self.fc4 = nn.Linear(6, 64)
+
         self.optimizer = optim.Adam(self.parameters(), lr=lr)
 
         self.loss = nn.MSELoss()
@@ -38,7 +40,7 @@ class DeepQNetwork(nn.Module):
         x = self.relu(x)
         x = self.fc2(x)
         x = self.relu(x)
-        x = self.sigmoid(self.embedding(ind_b)) * x
+        x = self.sigmoid(self.embedding(ind_b)) * x + self.fc4(ind_b)
 
         actions = self.fc3(x)
 
